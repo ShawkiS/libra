@@ -4,6 +4,7 @@ name: Post-land Test
 on:
   push:
     branches:
+      - canary
       - 'release**'
 
 jobs:
@@ -18,8 +19,10 @@ jobs:
         id: set_env
         run: |
           HEAD_GIT_REV=$(git rev-parse --short=8 HEAD)
+          HEAD_GIT_REV=ae652677
           echo "::set-env name=HEAD_GIT_REV::$HEAD_GIT_REV"
           IMAGE_TAG=$(echo ${GITHUB_REF#refs/heads/})_$HEAD_GIT_REV
+          IMAGE_TAG=master_$HEAD_GIT_REV
           echo $IMAGE_TAG
           echo "::set-env name=IMAGE_TAG::$IMAGE_TAG"
       - name: poll_images
